@@ -1,0 +1,83 @@
+<mat-card class="login-card" color="dark">
+  <mat-card-header>
+    <mat-card-title>Register</mat-card-title>
+  </mat-card-header>
+  <form [formGroup]="registerData">
+    <mat-card-content>
+      <table cellspacing="0">
+        <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                type="text"
+                placeholder="Name*"
+                required
+                formControlName="name"
+                matInput
+              />
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                placeholder="Email*"
+                required
+                formControlName="email"
+                type="email"
+                matInput
+              />
+            </mat-form-field>
+            <mat-error *ngIf="email.invalid && email.errors.email">
+              Invalid email address
+            </mat-error>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                placeholder="password*"
+                required
+                formControlName="password"
+                type="password"
+                matInput
+              />
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <input
+                matInput
+                placeholder="Confirm Password*"
+                required
+                formControlName="repeatpassword"
+                type="password"
+                matInput
+              />
+            </mat-form-field>
+            <!-- <mat-error
+            *ngIf="
+              repeatpassword.invalid && repeatpassword.errors.passwordMatch"
+            "
+          >
+          Confirm Password Not Matched
+          </mat-error> -->
+          </td>
+        </tr>
+      </table>
+    </mat-card-content>
+    <mat-card-actions>
+      <button color="primary" (click)="register()" mat-raised-button>
+        Register
+      </button>
+    </mat-card-actions>
+    <span>Don't Have an Account ? <a routerLink="/login">Login</a></span>
+  </form>
+</mat-card>

@@ -8,7 +8,30 @@
       <a mat-button routerLink="/products" routerLinkActive="active-link"
         >Products</a
       >
-      <a mat-button>Home</a>
+      <a
+        mat-stroked-button
+        routerLink="/register"
+        routerLinkActive="active-link"
+        >Register</a
+      >
+
+      <a
+        *ngIf="!user"
+        mat-stroked-button
+        routerLink="/login"
+        routerLinkActive="active-link"
+        >Login</a
+      >
+
+      <div>
+        <a *ngIf="user" mat-button [matMenuTriggerFor]="menu">
+          <mat-icon>account_circle</mat-icon>
+          {{ user.name }}
+        </a>
+        <mat-menu #menu="matMenu">
+          <button (click)="logout()" mat-menu-item>Logout</button>
+        </mat-menu>
+      </div>
     </mat-toolbar-row>
   </mat-toolbar>
 </header>

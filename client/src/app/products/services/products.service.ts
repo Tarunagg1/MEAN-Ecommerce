@@ -9,7 +9,7 @@ export class ProductsService {
   constructor(private _httpClient: HttpClient) { }
 
   getAllProducts(){
-    
+
   }
-  
+
 }
