@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev":"nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "concurrently": "^7.0.0",
     "cors": "^2.8.5",
+    "debug": "^4.3.3",
     "dotenv": "^14.3.0",
     "express": "^4.17.2",
     "express-async-handler": "^1.2.0",

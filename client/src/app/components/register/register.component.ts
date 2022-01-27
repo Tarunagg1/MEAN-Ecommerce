@@ -21,8 +21,6 @@ export class RegisterComponent implements OnInit {
     ]),
   });
 
-
-
   ngOnInit(): void {}
 
   passwordMatchFun(control: FormControl) {
@@ -34,22 +32,24 @@ export class RegisterComponent implements OnInit {
 
   register() {
     const registerData = this.registerData.getRawValue();
-
-    console.log(this.registerData.valid);
     if (!this.registerData.valid) {
       return;
     }
 
-    this._AuthService.registerApiService(registerData).subscribe(() => {
-      this._router.navigate(['/']);
-    });
+    this._AuthService.registerApiService(registerData).subscribe(
+      () => {
+        this._router.navigate(['/']);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
- 
   get email() {
     return this.registerData.get('email');
   }
- 
+
   get repeatpassword() {
     return this.registerData.get('repeatpassword');
   }

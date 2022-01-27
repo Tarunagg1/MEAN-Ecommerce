@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of, Subject } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators';
 import { User } from '../models/user';
 
 @Injectable({
@@ -9,14 +10,9 @@ import { User } from '../models/user';
 export class AuthService {
   private user$ = new Subject<User>();
 
-  private _baseUrl = 'http://localhost:3000';
+  private _baseUrl = 'http://localhost:3000/api/v1';
 
   constructor(private _http: HttpClient) {}
-
-  loginApiService(loginData: object) {
-    return of({ loginData: loginData });
-    // return this._http.post(`${this._baseUrl}/api/login`, loginData);
-  }
 
   get user() {
     return this.user$.asObservable();
@@ -26,11 +22,32 @@ export class AuthService {
     this.user$.next(user);
   }
 
-  registerApiService(userData: User) {
-    this.setUser(userData);
+  loginApiService(loginData: object) {
+    return this._http.post<User>(`${this._baseUrl}/auth/login`, loginData).pipe(
+      switchMap((foundUser: User) => {
+        this.setUser(foundUser);
+        return of(true);
+      }),
+      catchError((e: any) => {
+        alert(e.error.message);
+        return throwError(e.error.message);
+      })
+    );
+  }
 
-    return of({ userData });
-    // return this._http.post(`${this._baseUrl}/api/login`, loginData);
+  registerApiService(userData: User) {
+    return this._http
+      .post<User>(`${this._baseUrl}/auth/register`, userData)
+      .pipe(
+        switchMap((saveData: User) => {
+          this.setUser(saveData);
+          return of(true);
+        }),
+        catchError((e: any) => {
+          alert(e.error.message);
+          return throwError(e.error.message);
+        })
+      );
   }
 
   logoutApiService() {

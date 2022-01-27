@@ -7,6 +7,9 @@ const logger = require('morgan');
 const { env } = require('./config');
 const routerMain = require('../routers');
 
+// initializing the mongoose 
+require('./db')();
+
 // get app
 const app = express();
 
