@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from './models/user';
 import { AuthService } from './services/auth.service';
+import { TokenserviceService } from './services/tokenservice.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,8 @@ export class AppComponent implements OnDestroy{
   }
 
   constructor(private _AuthService: AuthService,private _router: Router){
+    // this._AuthService.findMe().subscribe(user => this.User = user);
+
     this._AuthService.user.subscribe((user) =>{
       this.user = user;
     })

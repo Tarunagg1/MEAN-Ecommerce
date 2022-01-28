@@ -9,9 +9,39 @@ async function registerController(user) {
         user.password = hashPassword
         const newUser = new userModel(user);
         const respUser = await newUser.save();
-        return respUser;
+        let respdata = {
+            _id: respUser._id,
+        }
+        return respdata;
     } catch (error) {
         throw new Error("Internal Error");
+    }
+}
+
+
+async function getUserByEmailPassword(email, password) {
+    let user = await userModel.findOne({ email });
+    if (isValidPass(user, password, user.password)) {
+        user = user.toObject();
+        delete user.password;
+        return user;
+    } else {
+        return null;
+    }
+}
+
+async function isValidPass(user, password, hastpass) {
+    return user && bcrypt.compareSync(password, hastpass);
+}
+
+async function getUserById(id) {
+    let user = await userModel.findById(id);
+    if (user) {
+        user = user.toObject();
+        delete user.password;
+        return user;
+    } else {
+        return null;
     }
 }
 
@@ -21,11 +51,10 @@ async function loginController({ email, password }) {
         if (isUser) {
             const isPasswordMatch = await bcrypt.compare(password, isUser.password);
             if (isPasswordMatch) {
-                const { name, email, roles, isactive } = isUser;
-
+                const { _id } = isUser;
                 const resp = {
                     message: 'Login successfully',
-                    user: { name, email, roles, isactive }
+                    user: _id
                 }
                 return resp;
             } else {
@@ -44,6 +73,8 @@ async function loginController({ email, password }) {
 
 module.exports = {
     registerController,
-    loginController
+    loginController,
+    getUserById,
+    getUserByEmailPassword
 }
 

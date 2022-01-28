@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const { env } = require('./config');
 const routerMain = require('../routers');
+const passport = require('passport');
 
 // initializing the mongoose 
 require('./db')();
@@ -32,6 +33,9 @@ app.use(helmet());
 
 // allow cors
 app.use(cors());
+
+// authentication
+app.use(passport.initialize());
 
 
 app.use('/api/v1', routerMain);

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of, Subject, throwError } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 import { User } from '../models/user';
+import { TokenserviceService } from './tokenservice.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,10 @@ export class AuthService {
 
   private _baseUrl = 'http://localhost:3000/api/v1';
 
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private _TokenserviceService: TokenserviceService
+  ) {}
 
   get user() {
     return this.user$.asObservable();
@@ -39,8 +43,9 @@ export class AuthService {
     return this._http
       .post<User>(`${this._baseUrl}/auth/register`, userData)
       .pipe(
-        switchMap((saveData: User) => {
+        switchMap((saveData: any) => {
           this.setUser(saveData);
+          this._TokenserviceService.setToken(saveData.token);
           return of(true);
         }),
         catchError((e: any) => {
@@ -50,8 +55,24 @@ export class AuthService {
       );
   }
 
+  findMe() {
+    const token = this._TokenserviceService.getToken();
+    if (!token) {
+      return null;
+    }
+    return this._http.get<any>(`${this._baseUrl}/auth/findme`).pipe(
+      switchMap((foundUser: any) => {
+        this.setUser(foundUser.user);
+        return of(foundUser.user);
+      }),
+      catchError((err: any) => {
+        return throwError('Session expire');
+      })
+    );
+  }
+
   logoutApiService() {
+    this._TokenserviceService.removeToken();
     this.setUser(null);
-    console.log('loggedout');
   }
 }
