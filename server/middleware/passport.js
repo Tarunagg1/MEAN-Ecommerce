@@ -21,7 +21,7 @@ const localLogin = new LocalStrategy(
 
 const jwtLogin = new jwtStrategy(
     {
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        jwtFromRequest: extractjwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: config.JWT_SECRET_KEY
     },
     async (payload, done) => {

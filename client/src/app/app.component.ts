@@ -8,31 +8,32 @@ import { TokenserviceService } from './services/tokenservice.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnDestroy{
+export class AppComponent implements OnDestroy {
   title = 'client';
 
-  user:User;
-  userSubscription:Subscription;
+  user: User;
+  userSubscription: Subscription;
 
   ngOnDestroy(): void {
-      if(this.userSubscription){
-        this.userSubscription.unsubscribe();
-      }
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
-  constructor(private _AuthService: AuthService,private _router: Router){
-    // this._AuthService.findMe().subscribe(user => this.User = user);
-
-    this._AuthService.user.subscribe((user) =>{
+  constructor(private _AuthService: AuthService, private _router: Router) {
+    this._AuthService.findMe().subscribe((user) => {
       this.user = user;
-    })
+    });
+
+    this._AuthService.user.subscribe((user) => {
+      this.user = user;
+    });
   }
 
-  logout(): void{
+  logout(): void {
     this._AuthService.logoutApiService();
     this._router.navigate(['']);
   }
-
 }

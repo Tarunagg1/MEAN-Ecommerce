@@ -9,8 +9,9 @@ import { HomeComponent } from './components/home/home.component';
 import { ProductsModule } from './products/products.module';
 import { LoginComponent } from './components/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RegisterComponent } from './components/register/register.component';
+import { AuthinteracaptorService } from './interacaptor/authinteracaptor.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,13 @@ import { RegisterComponent } from './components/register/register.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthinteracaptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

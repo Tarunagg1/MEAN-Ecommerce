@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { of, Subject, throwError } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 import { User } from '../models/user';
+import { LogserviceService } from './logservice.service';
 import { TokenserviceService } from './tokenservice.service';
 
 @Injectable({
@@ -15,7 +16,8 @@ export class AuthService {
 
   constructor(
     private _http: HttpClient,
-    private _TokenserviceService: TokenserviceService
+    private _TokenserviceService: TokenserviceService,
+    private _LogserviceService: LogserviceService
   ) {}
 
   get user() {
@@ -33,6 +35,7 @@ export class AuthService {
         return of(true);
       }),
       catchError((e: any) => {
+        this._LogserviceService.log('Server error accure ', e);
         alert(e.error.message);
         return throwError(e.error.message);
       })
@@ -44,11 +47,12 @@ export class AuthService {
       .post<User>(`${this._baseUrl}/auth/register`, userData)
       .pipe(
         switchMap((saveData: any) => {
-          this.setUser(saveData);
+          this.setUser(saveData.user);
           this._TokenserviceService.setToken(saveData.token);
           return of(true);
         }),
         catchError((e: any) => {
+          this._LogserviceService.log('Server error accure ', e);
           alert(e.error.message);
           return throwError(e.error.message);
         })
@@ -58,14 +62,16 @@ export class AuthService {
   findMe() {
     const token = this._TokenserviceService.getToken();
     if (!token) {
-      return null;
+      return throwError('Session expire');
     }
+
     return this._http.get<any>(`${this._baseUrl}/auth/findme`).pipe(
       switchMap((foundUser: any) => {
         this.setUser(foundUser.user);
         return of(foundUser.user);
       }),
       catchError((err: any) => {
+        this._LogserviceService.log('Server error accure ', err);
         return throwError('Session expire');
       })
     );

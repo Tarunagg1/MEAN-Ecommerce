@@ -16,8 +16,7 @@ import { CommonMaterialModule } from '../material-module';
     CommonModule,
     ProductsRoutingModule,
     HttpClientModule,
-    CommonMaterialModule
-  ],
+CommonMaterialModule  ],
   providers: [
     ProductsService
   ]
