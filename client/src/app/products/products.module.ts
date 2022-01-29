@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products/products.component';
-import { ProductsService } from './services/products.service';
 import { HttpClientModule } from '@angular/common/http';
-import { CommonMaterialModule } from '../material-module';
+import { CommonMaterialModule } from '@shared/material-module';
+import { ProductsService } from '@core/productservice/products.service';
 
 
 @NgModule({

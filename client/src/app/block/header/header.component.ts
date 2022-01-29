@@ -1,18 +1,22 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from './models/user';
-import { AuthService } from './services/auth.service';
-import { TokenserviceService } from './services/tokenservice.service';
+import { User } from 'src/app/core/models/user';
+import { AuthService } from '@core/authservice/auth.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss']
 })
-export class AppComponent implements OnDestroy {
-  title = 'client';
+export class HeaderComponent implements OnInit {
 
+
+  ngOnInit(): void {
+  }
+
+
+  
   user: User;
   userSubscription: Subscription;
 
@@ -37,3 +41,4 @@ export class AppComponent implements OnDestroy {
     this._router.navigate(['']);
   }
 }
+

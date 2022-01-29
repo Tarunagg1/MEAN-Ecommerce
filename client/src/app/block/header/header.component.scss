@@ -1,0 +1,31 @@
+a {
+    margin: 10px;
+  }
+  
+  
+  .active-link {
+    background-color: #324191;
+    color: #fff;
+  }
+  
+  header a {
+    border: none;
+  
+    .active-link {
+      background-color: royalblue;
+    }
+  
+    .logo {
+      // background-image: url('../assets/logo.png');
+      height: 50px;
+      width: 50px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  
+    .mat-icon {
+      vertical-align: middle;
+      margin: 0;
+    }
+  }
+  
