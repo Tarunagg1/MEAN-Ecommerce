@@ -1,35 +1,50 @@
-<header>
+<div style="width: 100vw;">
   <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <span>E-commerce</span>
+    <mat-toolbar-row class="flex">
+      <div class="left">
+        <button class="menuBBtn" mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>E-commerce</span>
 
-      <a mat-button routerLink="/products" routerLinkActive="active-link"
-        >Products</a
-      >
-      <a
-        mat-stroked-button
-        routerLink="/register"
-        routerLinkActive="active-link"
-        >Register</a
-      >
+        <a mat-button routerLink="/products" routerLinkActive="active-link"
+          >Products</a
+        >
+      </div>
+      <div class="rightheader">
+        <a
+          *ngIf="!user.name"
+          mat-stroked-button
+          routerLink="/register"
+          routerLinkActive="active-link"
+          >Register</a
+        >
+        <a
+          *ngIf="!user.name"
+          mat-stroked-button
+          routerLink="/login"
+          routerLinkActive="active-link"
+          >Login</a
+        >
 
-      <a
-        *ngIf="!user"
-        mat-stroked-button
-        routerLink="/login"
-        routerLinkActive="active-link"
-        >Login</a
-      >
-
-      <div>
-        <a *ngIf="user" mat-button [matMenuTriggerFor]="menu">
-          <mat-icon>account_circle</mat-icon>
-          {{ user.name }}
-        </a>
-        <mat-menu #menu="matMenu">
-          <button (click)="logout()" mat-menu-item>Logout</button>
-        </mat-menu>
+        <div>
+          <a *ngIf="user.name" mat-button [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+            {{ user.name }}
+          </a>
+          <mat-menu #menu="matMenu">
+            <button (click)="LogoutEvent.emit()" mat-menu-item>Logout</button>
+          </mat-menu>
+        </div>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>
-</header>
+
+  <mat-sidenav-container>
+    <mat-sidenav #sidenav>
+      <mat-nav-list>
+        <a (click)="sidenav.toggle()" routerLink="/products">Home</a>
+      </mat-nav-list>
+    </mat-sidenav>
+  </mat-sidenav-container>
+</div>

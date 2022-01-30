@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@core/authservice/auth.service';
 
@@ -6,12 +6,15 @@ import { AuthService } from '@core/authservice/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent implements OnInit {
   loginData = {
     email: '',
     password: '',
   };
+
+  
   constructor(private _router: Router, private _AuthService: AuthService) {}
 
   ngOnInit(): void {}
@@ -21,7 +24,4 @@ export class LoginComponent implements OnInit {
       this._router.navigate(['']);
     });
   }
-
-  
-
 }

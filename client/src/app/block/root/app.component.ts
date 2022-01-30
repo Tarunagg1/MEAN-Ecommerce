@@ -1,6 +1,6 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { User } from '../../core/models/user';
 import { AuthService } from '@core/authservice/auth.service';
 
@@ -9,10 +9,10 @@ import { AuthService } from '@core/authservice/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'client';
 
-  user: User;
+  user: Observable<User>;
   userSubscription: Subscription;
 
   ngOnDestroy(): void {
@@ -21,12 +21,12 @@ export class AppComponent implements OnDestroy {
     }
   }
 
-  constructor(private _AuthService: AuthService, private _router: Router) {
-    this._AuthService.findMe().subscribe((user) => {
-      this.user = user;
-    });
+  constructor(private _AuthService: AuthService, private _router: Router) {}
 
-    this._AuthService.user.subscribe((user) => {
+  ngOnInit(): void {
+    this.user = this._AuthService.user;
+
+    this.userSubscription = this._AuthService.findMe().subscribe((user) => {            
       this.user = user;
     });
   }

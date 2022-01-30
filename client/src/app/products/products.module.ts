@@ -5,7 +5,7 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products/products.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonMaterialModule } from '@shared/material-module';
-import { ProductsService } from '@core/productservice/products.service';
+import { ProductsService } from '@core/products/products.service';
 
 
 @NgModule({

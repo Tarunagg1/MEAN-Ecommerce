@@ -1,5 +1,21 @@
-.example-card {
-  max-width: 400px;
-  margin: 15px;
+// .example-card {
+//   max-width: 400px;
+//   margin: 15px;
+// }
+
+.mat-table {
+  box-shadow: none;
+  width: 100%;
 }
 
+.prooduct-listing-image {
+  height: 20em;
+  width: 15em;
+}
+
+@media all and (max-width: 699px) {
+  .prooduct-listing-image {
+    height: 9em;
+    width: 7em;
+  }
+}
