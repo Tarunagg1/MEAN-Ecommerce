@@ -6,10 +6,13 @@ import { RouterModule } from '@angular/router';
 import { CommonMaterialModule } from './material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AddtocartComponent } from './addtocart/addtocart.component';
 // import { FlexLayoutModule } from"@angular/flex-layout";
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    AddtocartComponent
+  ],
   imports: [
     CommonModule,
     SharedRoutingModule,
